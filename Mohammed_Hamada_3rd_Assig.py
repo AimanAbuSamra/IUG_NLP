@@ -1,31 +1,49 @@
 
-#Student Name: Mohammed Hamada
-#Student No: 120201362
-#Assignmet3
+#Student Name : Mohammed Hamada
+#student No: 120201362
 
-#get first string and second string
+def minEditDist(s, t, costs=(1, 1, 2)):
+
+    
+
+    #calculate the length
+    rows = len(s)+1
+    cols = len(t)+1
+
+    #delete = 1 , insert = 1 , substitues = 2 , 
+    deletes, inserts, substitutes = costs
+    
+    #2D arr
+    dist = [[0 for x in range(cols)] for x in range(rows)]
+
+    #for each row i from 1 to n do D[i,0] D[i-1,0] + del-cost(source[i])
+    for row in range(1, rows):
+        dist[row][0] = row * deletes
+
+    #for each column j from 1 to m do D[0,j] D[0, j-1] + ins-cost(target[j])
+    for col in range(1, cols):
+        dist[0][col] = col * inserts
+        
+
+    #D[i, j] MIN( D[i􀀀1, j] + del-cost(source[i]), D[i􀀀1, j􀀀1] + sub-cost(source[i], target[j]), D[i, j􀀀1] + ins-cost(target[j]))
+    for col in range(1, cols):
+        for row in range(1, rows):
+            if s[row-1] == t[col-1]:
+                cost = 0
+            else:
+                cost = substitutes
+            dist[row][col] = min(dist[row-1][col] + deletes,
+                                 dist[row][col-1] + inserts,
+                                 dist[row-1][col-1] + cost) # substitution
+
+    for r in range(rows):
+        print(dist[r])
+    
+ 
+    return dist[row][col]
+
 firstString = input("Plz Enter First string ")
 secondString = input("Plz Enter second string ")
 
-#get the length of both 2 strings
-i = len(firstString)
-j = len(secondString)
 
-
-# define a function for the algorithm of min edit distance with getting arg of 1st string 2nd string and length of both
-def minEditDist(firstString,secondString,i,j):
-    #check if 1st string is empty then return other string length which mean you need to change all letters
-    if i == 0:
-        return j
-    #check if 2st string is empty then return other string length which mean you need to change all letters
-    if j == 0:
-        return i
-    #if the letters are the same then we have to pass and go back with reduce the length to pointing to next letter
-    if firstString[i-1]== secondString[j-1]:
-        return minEditDist(firstString,secondString,i-1,j-1)
-    
-    # we will calculate the minum of left cell and right cell as well doen cell and add 1 for initial letter
-    return 1+min(minEditDist(firstString,secondString,i,j-1),minEditDist(firstString,secondString,i-1,j),minEditDist(firstString,secondString,i-1,j-1))
-
-
-print(minEditDist(firstString,secondString,i,j))
+print(minEditDist(firstString, secondString))
