@@ -1,11 +1,8 @@
-
-#Student Name : Mohammed Hamada
-#student No: 120201362
-
-def minEditDist(s, t, costs=(1, 1, 2)):
+def minEditDist(first, second, costs=(1, 1, 2)):
 
     
-
+    s = first.split()
+    t= second.split()
     #calculate the length
     rows = len(s)+1
     cols = len(t)+1
