@@ -1,0 +1,46 @@
+
+
+#     STD_name : Thaer Sahmoud
+#     STD_ID   : 120204075
+
+import re
+import string
+tar_txt = "The emergence of COVID-19 we have seen instances of public stigmatization among specific populations, " \
+          "and the rise of harmful stereotypes. Stigmatization could potentially contribute to more severe health problems," \
+          " ongoing transmission, and difficulties controlling infectious diseases during an epidemic. " \
+          "Please see the Subject in Focus section for more information on how to counter stigmatizing attitudes." \
+          " New cases for today in Alexandria are 256 cases and 122 cases were registered as recovered." \
+          " MOH thinking about major lockdown for 3 weeks. In Cairo there were registered 400 new cases and the recovered 350 but no lockdown is seen ahead."
+
+# Alex Code
+Alex_txt = re.findall("[^.]*?Alexandria[^.]*\.", tar_txt)
+Alex_txt = str(Alex_txt)
+Alex_nums = re.findall("\d+", Alex_txt)
+Alex_num1_pos =Alex_txt.find(Alex_nums[0])
+Alex_num2_pos =Alex_txt.find(Alex_nums[1])
+Alex_new_case_str = re.findall("[nN]ew cases",Alex_txt)
+Alex_new_case_pos = Alex_txt.find(Alex_new_case_str[0])
+if abs(Alex_new_case_pos-Alex_num1_pos) < abs(Alex_new_case_pos-Alex_num2_pos ) :
+    print(" Alexandria new Cases is : ",Alex_nums[0])
+    print(" Alexandria recovered Cases is : ", Alex_nums[1])
+else:
+    print(" Alexandria new Cases is : ",Alex_nums[1])
+    print(" Alexandria recovered Cases is : ", Alex_nums[0])
+
+
+# Cairo Code
+
+Cairo_txt = re.findall("[^.]*?Cairo[^.]*\.", tar_txt)
+Cairo_txt = str(Cairo_txt)
+
+Cairo_nums = re.findall("\d+", Cairo_txt)
+Cairo_num1_pos =Cairo_txt.find(Cairo_nums[0])
+Cairo_num2_pos =Cairo_txt.find(Cairo_nums[1])
+Cairo_new_case_str = re.findall("[nN]ew cases",Cairo_txt)
+Cairo_new_case_pos = Cairo_txt.find(Cairo_new_case_str[0])
+if abs(Cairo_new_case_pos-Cairo_num1_pos) < abs(Cairo_new_case_pos-Cairo_num2_pos ) :
+    print(" Cairo new Cases is : ",Cairo_nums[0])
+    print(" Cairo recovered Cases is : ", Cairo_nums[1])
+else:
+    print(" Cairo new Cases is : ",Cairo_nums[1])
+    print(" Cairo recovered Cases is : ", Cairo_nums[0])
