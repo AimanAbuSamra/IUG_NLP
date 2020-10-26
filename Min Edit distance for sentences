@@ -1,0 +1,72 @@
+
+
+########## STD Name: Thaer Sahmoud
+########## STD Num:  120204075
+import re
+
+
+def Min_Edit_dist(src,tar):
+    cost=[]
+    if src=="":
+        return len(tar)
+    if tar=="":
+        return len(src)
+    if tar!="" or scr!="":
+        src = " " + src
+        tar = " " + tar
+
+        cost_mat = []
+        cost_mat = [[0 for x in range(len(tar)-1)] for count_r in range((len(src)-1))]
+        for i in range(len(src)-1):
+            for j in range(len(tar)-1):
+                cost_mat[0][j] = j
+                cost_mat[i][0] = i
+                if i!=0 or j !=0:
+                    same_or_not = ""
+                    if src[i]==tar[j]:
+                        same_or_not =0
+                    else:
+                        same_or_not =2
+
+                    cost_mat[i][j]=min( (cost_mat[i-1][j])+1, (cost_mat[i][j-1])+1, (cost_mat[i-1][j-1])+same_or_not)
+    return cost_mat [i][j]
+
+sentence1 = "Stanford President John Hennessy"
+# sentence2 = "Stanford President John Hennessy President"
+# sentence1 = "Stanford Stanford Stanford Stanford"
+sentence2 = "Stanford University President John Hennessy"
+# to check all posibles
+if len(sentence1)>= len(sentence2):
+    ws1 = re.findall("[^ ]+",sentence1)
+    ws2 = re.findall("[^ ]+",sentence2)
+else:
+    ws2 = re.findall("[^ ]+",sentence1)
+    ws1 = re.findall("[^ ]+",sentence2)
+min_ber_wd = []
+min_ber_wd_cst = []
+taken_words=[]
+for w1 in ws1:
+    w_cost=[]
+
+    fst_step = 1
+    cost_val =""
+    cost_ini = ""
+    for w2 in ws2:
+        if fst_step == 1:
+            cost_ini = Min_Edit_dist(w1, w2)
+            w_cost.append(cost_ini)
+            fst_step = 0
+        if w2 not in taken_words:
+            if Min_Edit_dist(w1,w2) <= cost_ini:
+                cost_val =Min_Edit_dist(w1,w2)
+                w_cost.append(Min_Edit_dist(w1,w2))
+            else:
+                cost_val = cost_ini
+                w_cost.append(cost_ini)
+    min_ber_wd.append(min(w_cost))
+    min_ber_wd_cst.append(w_cost.index(min(w_cost)))
+    if min(w_cost) <= len(w2):
+        taken_words.append(ws1[w_cost.index(min(w_cost))])
+
+print("Total Cost between the two sentences =\n",sentence1,"\n",sentence2,"\n",sum(min_ber_wd))
+
